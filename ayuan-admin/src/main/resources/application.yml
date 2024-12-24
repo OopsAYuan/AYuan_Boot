@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    name: ayuan_datasource
+    url: jdbc:mysql://127.0.0.1:3306/ayuan?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+  devtools:
+    # 热部署生效
+    add-properties: true
+    # 设置重启的目录
+    restart:
+      additional-paths: src/main/java
+
+mybatis:
+  # 加载全局的配置文件
+  configLocation: classpath:mybatis/mybatis-config.xml
+  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  mapperLocations: classpath*:mapper/**/*Mapper.xml
+  # 扫描实体类路径（搜索指定包别名）
+  typeAliasesPackage: com.ayuan.**.entity

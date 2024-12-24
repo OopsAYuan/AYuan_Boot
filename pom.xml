@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!-- 父工程项目信息 -->
+    <groupId>com.ayuan</groupId>
+    <artifactId>AYuan</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <!-- 打包方式 -->
+    <packaging>pom</packaging>
+    <!-- 子工程声明 -->
+    <modules>
+        <module>ayuan-common</module>
+        <module>ayuan-admin</module>
+        <module>ayuan-core</module>
+    </modules>
+
+    <properties>
+        <ayuan.version>1.0-SNAPSHOT</ayuan.version>
+        <java.version>1.8</java.version>
+        <spring-boot.version>2.5.15</spring-boot.version>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <pagehelper.boot.version>1.4.7</pagehelper.boot.version>
+        <fastjson.version>1.2.83</fastjson.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+    <!-- 依赖管理 -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- 阿里JSON解析器 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+
+            <!-- pagehelper 分页插件 -->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper.boot.version}</version>
+            </dependency>
+
+            <!-- SpringBoot的依赖配置 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- AYuan的依赖配置 begin -->
+
+            <!-- 核心模块 -->
+            <dependency>
+                <groupId>com.ayuan</groupId>
+                <artifactId>ayuan-core</artifactId>
+                <version>${ayuan.version}</version>
+            </dependency>
+            <!-- 通用工具模块 -->
+            <dependency>
+                <groupId>com.ayuan</groupId>
+                <artifactId>ayuan-common</artifactId>
+                <version>${ayuan.version}</version>
+            </dependency>
+            <!-- 后台管理模块 -->
+            <dependency>
+                <groupId>com.ayuan</groupId>
+                <artifactId>ayuan-admin</artifactId>
+                <version>${ayuan.version}</version>
+            </dependency>
+
+            <!-- AYuan的依赖配置 end -->
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- 构建配置 -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!-- Maven镜像源 -->
+    <repositories>
+        <repository>
+            <id>public</id>
+            <name>aliyun nexus</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
+
+    <!-- 插件镜像源 -->
+    <pluginRepositories>
+        <pluginRepository>
+            <id>public</id>
+            <name>aliyun nexus</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+</project>
