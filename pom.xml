@@ -5,107 +5,158 @@
     <modelVersion>4.0.0</modelVersion>
     <!-- 父工程项目信息 -->
     <groupId>com.ayuan</groupId>
-    <artifactId>AYuan</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>ayuan</artifactId>
+    <version>${revision}</version>
     <!-- 打包方式 -->
     <packaging>pom</packaging>
     <!-- 子工程声明 -->
     <modules>
-        <module>ayuan-common</module>
-        <module>ayuan-admin</module>
-        <module>ayuan-core</module>
+        <module>ayuan-dependencies</module>
+        <module>ayuan-framework</module>
+        <module>ayuan-server</module>
+        <module>ayuan-module-system</module>
     </modules>
 
+    <name>${project.artifactId}</name>
+    <description>阿源项目基础脚手架</description>
+    <url>https://github.com/OopsAYuan/AYuan_Boot</url>
+
     <properties>
-        <ayuan.version>1.0-SNAPSHOT</ayuan.version>
+        <revision>1.0.0-jdk8-SNAPSHOT</revision>
+        <!-- Maven 相关 -->
         <java.version>1.8</java.version>
-        <spring-boot.version>2.5.15</spring-boot.version>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-        <pagehelper.boot.version>1.4.7</pagehelper.boot.version>
-        <fastjson.version>1.2.83</fastjson.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
+        <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
+        <flatten-maven-plugin.version>1.6.0</flatten-maven-plugin.version>
+        <!-- 看看咋放到 bom 里 -->
+        <lombok.version>1.18.34</lombok.version>
+        <spring.boot.version>2.7.18</spring.boot.version>
+        <mapstruct.version>1.6.2</mapstruct.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
+
+
 
     <!-- 依赖管理 -->
     <dependencyManagement>
         <dependencies>
-            <!-- 阿里JSON解析器 -->
             <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>fastjson</artifactId>
-                <version>${fastjson.version}</version>
-            </dependency>
-
-            <!-- pagehelper 分页插件 -->
-            <dependency>
-                <groupId>com.github.pagehelper</groupId>
-                <artifactId>pagehelper-spring-boot-starter</artifactId>
-                <version>${pagehelper.boot.version}</version>
-            </dependency>
-
-            <!-- SpringBoot的依赖配置 -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot.version}</version>
+                <groupId>com.ayuan</groupId>
+                <artifactId>ayuan-dependencies</artifactId>
+                <version>${revision}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
-            <!-- AYuan的依赖配置 begin -->
-
-            <!-- 核心模块 -->
-            <dependency>
-                <groupId>com.ayuan</groupId>
-                <artifactId>ayuan-core</artifactId>
-                <version>${ayuan.version}</version>
-            </dependency>
-            <!-- 通用工具模块 -->
-            <dependency>
-                <groupId>com.ayuan</groupId>
-                <artifactId>ayuan-common</artifactId>
-                <version>${ayuan.version}</version>
-            </dependency>
-            <!-- 后台管理模块 -->
-            <dependency>
-                <groupId>com.ayuan</groupId>
-                <artifactId>ayuan-admin</artifactId>
-                <version>${ayuan.version}</version>
-            </dependency>
-
-            <!-- AYuan的依赖配置 end -->
         </dependencies>
     </dependencyManagement>
 
     <!-- 构建配置 -->
     <build>
+        <pluginManagement>
+            <plugins>
+                <!-- maven-surefire-plugin 插件，用于运行单元测试。 -->
+                <!-- 注意，需要使用 3.0.X+，因为要支持 Junit 5 版本 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven-surefire-plugin.version}</version>
+                </plugin>
+                <!-- maven-compiler-plugin 插件，解决 spring-boot-configuration-processor + Lombok + MapStruct 组合 -->
+                <!-- https://stackoverflow.com/questions/33483697/re-run-spring-boot-configuration-annotation-processor-to-update-generated-metada -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
+                    <configuration>
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.springframework.boot</groupId>
+                                <artifactId>spring-boot-configuration-processor</artifactId>
+                                <version>${spring.boot.version}</version>
+                            </path>
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>${lombok.version}</version>
+                            </path>
+                            <path>
+                                <groupId>org.mapstruct</groupId>
+                                <artifactId>mapstruct-processor</artifactId>
+                                <version>${mapstruct.version}</version>
+                            </path>
+                        </annotationProcessorPaths>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>flatten-maven-plugin</artifactId>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
         <plugins>
+            <!-- 统一 revision 版本 -->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>${flatten-maven-plugin.version}</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <flattenMode>oss</flattenMode>
+                    <updatePomFile>true</updatePomFile>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                    </execution>
+                    <execution>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
 
-    <!-- Maven镜像源 -->
+    <!-- Maven镜像源  使用 huawei / aliyun -->
     <repositories>
         <repository>
-            <id>public</id>
-            <name>aliyun nexus</name>
+            <id>huaweicloud</id>
+            <name>huawei</name>
+            <url>https://mirrors.huaweicloud.com/repository/maven/</url>
+        </repository>
+        <repository>
+            <id>aliyunmaven</id>
+            <name>aliyun</name>
             <url>https://maven.aliyun.com/repository/public</url>
+        </repository>
+
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>spring-snapshots</id>
+            <name>Spring Snapshots</name>
+            <url>https://repo.spring.io/snapshot</url>
             <releases>
-                <enabled>true</enabled>
+                <enabled>false</enabled>
             </releases>
         </repository>
     </repositories>
+
 
     <!-- 插件镜像源 -->
     <pluginRepositories>
