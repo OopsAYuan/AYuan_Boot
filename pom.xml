@@ -15,6 +15,7 @@
         <module>ayuan-framework</module>
         <module>ayuan-server</module>
         <module>ayuan-module-system</module>
+        <module>ayuan-module-infra</module>
     </modules>
 
     <name>${project.artifactId}</name>

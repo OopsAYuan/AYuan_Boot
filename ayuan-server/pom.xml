@@ -27,11 +27,12 @@
             <artifactId>ayuan-module-system-biz</artifactId>
             <version>${revision}</version>
         </dependency>
-        <dependency>
-            <groupId>com.ayuan</groupId>
-            <artifactId>ayuan-starter-web</artifactId>
-            <version>${revision}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.ayuan</groupId>-->
+<!--            <artifactId>ayuan-module-infra-biz</artifactId>-->
+<!--            <version>${revision}</version>-->
+<!--        </dependency>-->
+
         <!-- spring boot 配置所需依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -42,6 +43,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
+
+        <!-- 服务保障相关 -->
+        <dependency>
+            <groupId>com.ayuan</groupId>
+            <artifactId>ayuan-starter-protection</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

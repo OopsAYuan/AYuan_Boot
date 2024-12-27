@@ -16,6 +16,8 @@
         <module>ayuan-starter-mybatis</module>
         <module>ayuan-starter-web</module>
         <module>ayuan-starter-security</module>
+        <module>ayuan-common</module>
+        <module>ayuan-starter-protection</module>
     </modules>
 
     <name>${project.artifactId}</name>
