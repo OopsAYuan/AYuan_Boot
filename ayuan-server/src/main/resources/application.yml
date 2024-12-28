@@ -2,27 +2,15 @@ spring:
   pplication:
     name: ayuan-server
 
+  profiles:
+    active: local
+
   main:
     allow-circular-references: true # 允许循环依赖，因为项目是三层架构，无法避免这个情况。
 
   cloud:
     compatibility-verifier:
       enabled: false # 关闭 Spring Cloud 兼容性校验，因为 Spring Cloud 3.X 会报错，但是不影响使用
-
-  datasource:
-    name: master
-    url: jdbc:mysql://127.0.0.1:3306/ayuan?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: 123456
-  devtools:
-    # 热部署生效
-    add-properties: true
-    # 设置重启的目录
-    restart:
-      additional-paths: src/main/java
-
-
 
 # MyBatis Plus 的配置项
 mybatis-plus:

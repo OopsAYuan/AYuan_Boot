@@ -1,1 +1,2 @@
 com.ayuan.framework.mybatis.config.AYuanMybatisPlusAutoConfiguration
+com.ayuan.framework.datasource.config.AYuanDataSourceAutoConfiguration

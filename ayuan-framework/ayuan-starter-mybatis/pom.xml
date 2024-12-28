@@ -51,10 +51,10 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.baomidou</groupId>-->
-<!--            <artifactId>dynamic-datasource-spring-boot-starter</artifactId> &lt;!&ndash; 多数据源 &ndash;&gt;-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>dynamic-datasource-spring-boot-starter</artifactId> <!-- 多数据源 -->
+        </dependency>
 
         <dependency>
             <groupId>com.github.yulichang</groupId>

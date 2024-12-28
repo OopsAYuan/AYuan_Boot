@@ -1,0 +1,33 @@
+server:
+  port: 26666
+
+spring:
+  autoconfigure:
+    exclude:
+      - com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
+      - org.springframework.boot.autoconfigure.quartz.QuartzAutoConfiguration
+  datasource:
+    dynamic:
+      druid:
+        initial-size: 1
+        min-idle: 1
+        max-active: 20
+        max-wait: 600000
+        time-between-eviction-runs-millis: 60000
+        min-evictable-idle-time-millis: 300000
+        max-evictable-idle-time-millis: 900000
+        validation-query: SELECT 1 FROM DUAL
+        test-while-idle: true
+        test-on-borrow: false
+        test-on-return: false
+      primary: master
+      datasource:
+        master:
+          url: jdbc:mysql://127.0.0.1:3306/ayuan?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true&rewriteBatchedStatements=true
+          username: root
+          password: 123456
+        slave:
+          lazy: true
+          url: jdbc:mysql://127.0.0.1:3306/ayuan?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true&rewriteBatchedStatements=true
+          username: root
+          password: 123456
